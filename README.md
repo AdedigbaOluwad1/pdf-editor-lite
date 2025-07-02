@@ -1,7 +1,6 @@
 # 📄 PDF Editor Lite
 
-[![PDF Editor Lite Preview](https://github.com/user-attachments/assets/f4c33ec2-8d13-4960-89c2-abf607464b5e)](https://pdf-editor-lite.vercel.app)
-
+[![PDF Editor Lite Preview](https://github.com/user-attachments/assets/c7edb554-1008-4409-a5e6-3ce4067d77e0)](https://pdf-editor-lite.vercel.app)
 
 **PDF Editor Lite** is a minimal, fast, and open-source browser-based PDF editing tool built with modern web technologies. It enables users to upload, preview, and (soon) annotate PDF documents directly in the browser — no server-side processing needed.
 
@@ -14,6 +13,7 @@
 - 🖊️ Planned: Add annotations, highlights, and text
 - 🧩 Lightweight UI and blazing fast performance
 - 🛠️ Built with scalability and extensibility in mind
+- 🤚 Drag-and-drop support
 
 ---
 
@@ -23,7 +23,6 @@
 - Export edited PDFs
 - Undo/Redo stack
 - Multi-page navigation with thumbnails
-- Drag-and-drop support
 
 ---
 
