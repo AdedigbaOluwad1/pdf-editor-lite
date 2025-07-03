@@ -131,6 +131,11 @@ export const toolbarConfig = (
   updateActiveToolbarBtn: UpdateActiveToolbarBtn,
   onFutureFeatClick: OnFutureFeatClick
 ): Partial<Record<LEFT_SIDEBAR_ENUMS, ToolbarButtonConfig[]>> => ({
+  [LEFT_SIDEBAR_ENUMS.POPULAR]: [
+    ...annotateButtons(activeToolbarBtn, onFutureFeatClick),
+    ...highlightButtons(activeToolbarBtn, updateActiveToolbarBtn),
+    ...underlineButtons(activeToolbarBtn, onFutureFeatClick),
+  ],
   [LEFT_SIDEBAR_ENUMS.ANOTATE]: annotateButtons(
     activeToolbarBtn,
     onFutureFeatClick
