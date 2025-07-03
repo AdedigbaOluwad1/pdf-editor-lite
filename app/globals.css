@@ -123,6 +123,10 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  :root {
+    @apply text-[90%];
+  }
 }
 
 .disable-pointer * {
