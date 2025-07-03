@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '../ui/dialog';
 import { Button } from '../ui/button';
 
 /**
@@ -14,7 +20,11 @@ export interface CommentDialogProps {
   onClose: () => void;
 }
 
-export const CommentDialog: React.FC<CommentDialogProps> = ({ open, onSubmit, onClose }) => {
+export const CommentDialog: React.FC<CommentDialogProps> = ({
+  open,
+  onSubmit,
+  onClose,
+}) => {
   const [input, updateInput] = useState('');
 
   useEffect(() => {
@@ -46,11 +56,14 @@ export const CommentDialog: React.FC<CommentDialogProps> = ({ open, onSubmit, on
               className="border w-full outline-none border-primary/30 rounded-md p-3 text-sm"
             />
           </div>
-          <Button type="submit" className="w-full min-h-[2.75rem] cursor-pointer">
+          <Button
+            type="submit"
+            className="w-full min-h-[2.75rem] cursor-pointer"
+          >
             Add new comment
           </Button>
         </form>
       </DialogContent>
     </Dialog>
   );
-}; 
+};

@@ -1,5 +1,5 @@
 import React from 'react';
-import MultiSelector from '../common/multi-selector';
+import MultiSelector from '../../common/multi-selector';
 
 /**
  * ToolbarButton props for a single toolbar action.
@@ -31,11 +31,11 @@ const ToolbarButton: React.FC<ToolbarButtonProps> = ({
     onClick={onClick}
     isActive={isActive}
   >
-    <div className='flex items-center gap-2'>
+    <div className="flex items-center gap-2">
       {icon}
-      <p className='text-sm hidden xxl:block pr-1'>{label}</p>
+      <p className="text-sm hidden xxl:block pr-1">{label}</p>
     </div>
   </MultiSelector>
 );
 
-export default ToolbarButton; 
+export default ToolbarButton;

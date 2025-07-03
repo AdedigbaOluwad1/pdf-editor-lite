@@ -43,6 +43,7 @@ cd pdf-editor-lite
 npm install
 npm run dev
 ```
+
 Then open http://localhost:3000 in your browser.
 
 ---
@@ -66,7 +67,7 @@ To get started:
 - Make your changes
 - Push and open a PR
 
---- 
+---
 
 ## 📄 License
 

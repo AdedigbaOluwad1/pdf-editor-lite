@@ -15,4 +15,4 @@ export const HighlightPopup: React.FC<HighlightPopupProps> = ({ comment }) =>
     </div>
   ) : null;
 
-export default HighlightPopup; 
+export default HighlightPopup;

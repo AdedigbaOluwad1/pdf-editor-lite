@@ -41,7 +41,8 @@ export function usePdfPanZoom({
     };
 
     const disablePointerEvents = () => wrapper.classList.add('disable-pointer');
-    const enablePointerEvents = () => wrapper.classList.remove('disable-pointer');
+    const enablePointerEvents = () =>
+      wrapper.classList.remove('disable-pointer');
 
     const handleMouseDown = (e: MouseEvent) => {
       if (cursorMode !== 'pan') return;
@@ -100,7 +101,9 @@ export function usePdfPanZoom({
     wrapper.addEventListener('mouseleave', handleMouseLeaveOrUp);
     wrapper.addEventListener('mouseup', handleMouseLeaveOrUp);
     wrapper.addEventListener('mousemove', handleMouseMove);
-    wrapper.addEventListener('touchstart', handleTouchStart, { passive: false });
+    wrapper.addEventListener('touchstart', handleTouchStart, {
+      passive: false,
+    });
     wrapper.addEventListener('touchmove', handleTouchMove, { passive: false });
     wrapper.addEventListener('touchend', handleTouchEnd);
 
@@ -113,5 +116,11 @@ export function usePdfPanZoom({
       wrapper.removeEventListener('touchmove', handleTouchMove);
       wrapper.removeEventListener('touchend', handleTouchEnd);
     };
-  }, [containerId, cursorMode, documentUploadStatus, loadedStatus, updateCanvasScale]);
-} 
+  }, [
+    containerId,
+    cursorMode,
+    documentUploadStatus,
+    loadedStatus,
+    updateCanvasScale,
+  ]);
+}
