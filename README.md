@@ -65,6 +65,7 @@ To get started:
 - Fork the repo
 - Create a new branch (git checkout -b feat/my-feature)
 - Make your changes
+- To ensure consistency with our code formatting, please run `npm run format` before opening a PR.
 - Push and open a PR
 
 ---
