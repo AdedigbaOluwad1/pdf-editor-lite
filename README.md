@@ -43,6 +43,7 @@ cd pdf-editor-lite
 npm install
 npm run dev
 ```
+
 Then open http://localhost:3000 in your browser.
 
 ---
@@ -67,7 +68,7 @@ To get started:
 - To ensure consistency with our code formatting, please run `npm run format` before opening a PR.
 - Push and open a PR
 
---- 
+---
 
 ## 📄 License
 
