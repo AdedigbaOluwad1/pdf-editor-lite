@@ -1,5 +1,5 @@
 'use client';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import Tooltip from '../common/tooltip';
 import IconButton from '../common/icon-button';
 import {
@@ -27,6 +27,7 @@ import { LEFT_SIDEBAR_ENUMS, TOOLBAR_BTNS } from '@/lib/enums';
 import DropdownSelector from '../common/dropdown-selector';
 import CommentViewer from '../core/comment-viewer';
 import HighlightStylePane from '../core/highlight-style-pane';
+import ToolbarButton from './toolbar-button';
 
 export default function ToolBar() {
 	const {
@@ -44,150 +45,65 @@ export default function ToolBar() {
 		canUndo,
 	} = useViewerContext();
 
-	const toolbarGroups: Partial<Record<LEFT_SIDEBAR_ENUMS, ReactNode>> = {
-		[LEFT_SIDEBAR_ENUMS.ANOTATE]: (
-			<>
-				<MultiSelector
-					tooltip={{
-						buttonTooltipContent: 'Erase',
-						side: 'bottom',
-					}}
-					dropdown={{ align: 'end', side: 'bottom' }}
-					dropdowncontent={
-						<div>
-							<p>Coming soon!</p>
-						</div>
-					}
-					onClick={onFutureFeatClick}
-					isActive={activeToolbarBtn?.id === TOOLBAR_BTNS.ERASE}
-				>
-					<div className='flex items-center gap-2'>
-						<Eraser
-							strokeWidth={1.5}
-							style={{ width: '1.5rem', height: '1.5rem' }}
-							color='#325167'
-						/>
+	const annotateButtons = [
+		{
+			tooltip: 'Erase',
+			icon: <Eraser strokeWidth={1.5} style={{ width: '1.5rem', height: '1.5rem' }} color='#325167' />,
+			label: 'Eraser',
+			isActive: activeToolbarBtn?.id === TOOLBAR_BTNS.ERASE,
+			onClick: onFutureFeatClick,
+			dropdownContent: <div><p>Coming soon!</p></div>,
+		},
+		{
+			tooltip: 'Type',
+			icon: <Type strokeWidth={1.5} style={{ width: '1.5rem', height: '1.5rem' }} color='#325167' />,
+			label: 'Type',
+			isActive: activeToolbarBtn?.id === TOOLBAR_BTNS.TYPE,
+			onClick: onFutureFeatClick,
+			dropdownContent: <div><p>Coming soon!</p></div>,
+		},
+		{
+			tooltip: 'Draw',
+			icon: <PenTool strokeWidth={1.5} style={{ width: '1.5rem', height: '1.5rem' }} color='#325167' />,
+			label: 'Draw',
+			isActive: activeToolbarBtn?.id === TOOLBAR_BTNS.DRAW,
+			onClick: onFutureFeatClick,
+			dropdownContent: <div><p>Coming soon!</p></div>,
+		},
+	];
 
-						<p className='text-sm hidden xxl:block pr-1'>Eraser</p>
-					</div>
-				</MultiSelector>
+	const highlightButtons = [
+		{
+			tooltip: 'Highlight',
+			icon: <Highlighter strokeWidth={1.5} style={{ width: '1.5rem', height: '1.5rem' }} color='#325167' />,
+			label: 'Highlight',
+			isActive: activeToolbarBtn?.id === TOOLBAR_BTNS.HIGHLIGHT,
+			onClick: () =>
+				updateActiveToolbarBtn({
+					id: TOOLBAR_BTNS.HIGHLIGHT,
+					label: 'Highlight',
+					onClick: () => null,
+					hideCustomCursor: true,
+				}),
+			dropdownContent: <HighlightStylePane />,
+		},
+	];
 
-				<MultiSelector
-					tooltip={{
-						buttonTooltipContent: 'Type',
-						side: 'bottom',
-					}}
-					dropdown={{ align: 'end', side: 'bottom' }}
-					dropdowncontent={
-						<div>
-							<p>Coming soon!</p>
-						</div>
-					}
-					onClick={() => onFutureFeatClick()}
-					isActive={activeToolbarBtn?.id === TOOLBAR_BTNS.TYPE}
-				>
-					<div className='flex items-center gap-2'>
-						<Type
-							strokeWidth={1.5}
-							style={{ width: '1.5rem', height: '1.5rem' }}
-							color='#325167'
-						/>
+	const underlineButtons = [
+		{
+			tooltip: 'Underline',
+			icon: <Underline strokeWidth={1.5} style={{ width: '1.5rem', height: '1.5rem' }} color='#325167' />,
+			label: 'Underline',
+			isActive: activeToolbarBtn?.id === TOOLBAR_BTNS.UNDERLINE,
+			onClick: onFutureFeatClick,
+			dropdownContent: <div><p>Coming soon!</p></div>,
+		},
+	];
 
-						<p className='text-sm hidden xxl:block pr-1'>Type</p>
-					</div>
-				</MultiSelector>
-
-				<MultiSelector
-					tooltip={{
-						buttonTooltipContent: 'Draw',
-						side: 'bottom',
-					}}
-					dropdown={{ align: 'end', side: 'bottom' }}
-					dropdowncontent={
-						<div>
-							<p>Coming soon!</p>
-						</div>
-					}
-					onClick={onFutureFeatClick}
-					isActive={activeToolbarBtn?.id === TOOLBAR_BTNS.DRAW}
-				>
-					<div className='flex items-center gap-2'>
-						<PenTool
-							strokeWidth={1.5}
-							style={{ width: '1.5rem', height: '1.5rem' }}
-							color='#325167'
-						/>
-
-						<p className='text-sm hidden xxl:block pr-1'>Draw</p>
-					</div>
-				</MultiSelector>
-			</>
-		),
-
-		[LEFT_SIDEBAR_ENUMS.HIGHLIGHT]: (
-			<>
-				<MultiSelector
-					tooltip={{
-						buttonTooltipContent: 'Highlight',
-						side: 'bottom',
-					}}
-					dropdown={{ align: 'end', side: 'bottom' }}
-					dropdowncontent={<HighlightStylePane />}
-					onClick={() =>
-						updateActiveToolbarBtn({
-							id: TOOLBAR_BTNS.HIGHLIGHT,
-							label: 'Highlight',
-							onClick: () => null,
-							hideCustomCursor: true,
-						})
-					}
-					isActive={activeToolbarBtn?.id === TOOLBAR_BTNS.HIGHLIGHT}
-				>
-					<div className='flex items-center gap-2'>
-						<Highlighter
-							strokeWidth={1.5}
-							style={{ width: '1.5rem', height: '1.5rem' }}
-							color='#325167'
-						/>
-
-						<p className='text-sm hidden xxl:block pr-1'>
-							Highlight
-						</p>
-					</div>
-				</MultiSelector>
-			</>
-		),
-
-		[LEFT_SIDEBAR_ENUMS.UNDERLINE]: (
-			<>
-				<MultiSelector
-					tooltip={{
-						buttonTooltipContent: 'Erase',
-						side: 'bottom',
-					}}
-					dropdown={{ align: 'end', side: 'bottom' }}
-					dropdowncontent={
-						<div>
-							<p>Coming soon!</p>
-						</div>
-					}
-					onClick={onFutureFeatClick}
-					isActive={activeToolbarBtn?.id === TOOLBAR_BTNS.UNDERLINE}
-				>
-					<div className='flex items-center gap-2'>
-						<Underline
-							strokeWidth={1.5}
-							style={{ width: '1.5rem', height: '1.5rem' }}
-							color='#325167'
-						/>
-
-						<p className='text-sm hidden xxl:block pr-1'>
-							Underline
-						</p>
-					</div>
-				</MultiSelector>
-			</>
-		),
+	const toolbarConfig: Partial<Record<LEFT_SIDEBAR_ENUMS, typeof annotateButtons>> = {
+		[LEFT_SIDEBAR_ENUMS.ANOTATE]: annotateButtons,
+		[LEFT_SIDEBAR_ENUMS.HIGHLIGHT]: highlightButtons,
+		[LEFT_SIDEBAR_ENUMS.UNDERLINE]: underlineButtons,
 	};
 
 	return (
@@ -377,11 +293,10 @@ export default function ToolBar() {
 			</div>
 
 			<div className='flex ml-auto items-center gap-0.5'>
-				{activeSidebarBtn === LEFT_SIDEBAR_ENUMS.POPULAR ? (
-					<>{...Object.values(toolbarGroups)}</>
-				) : (
-					toolbarGroups[activeSidebarBtn]
-				)}
+				{/* Render toolbar group buttons dynamically */}
+				{toolbarConfig[activeSidebarBtn]?.map((btn) => (
+					<ToolbarButton key={btn.label} {...btn} />
+				))}
 
 				<Separator
 					className='bg-[#a5b5c1] min-h-[15px] mx-2'
