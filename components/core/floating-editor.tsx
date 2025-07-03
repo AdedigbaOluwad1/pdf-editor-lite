@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
-import { useViewerContext } from '../layout/context';
+import { useViewerContext } from '@/contexts';
 import { throttle } from '@/lib/throttle';
 
 export default function FloatingEditor({
