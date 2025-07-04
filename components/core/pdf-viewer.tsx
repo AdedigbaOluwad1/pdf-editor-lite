@@ -1,21 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import { useMemo, useState } from 'react';
-import { pdfjs, Document, Page } from 'react-pdf';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import { useCallback, useEffect, useState } from 'react';
+
 import { useViewerContext } from '@/contexts';
 import { motion } from 'motion/react';
 import { DOCUMENT_UPLOAD_STATUS } from '@/lib/enums';
 import CustomCursor from './custom-cursor';
 import { CommentDialog } from './comment-dialog';
 import { usePdfPanZoom } from '@/hooks/use-pdf-pan-zoom';
-
-import 'react-pdf/dist/Page/AnnotationLayer.css';
-import 'react-pdf/dist/Page/TextLayer.css';
-
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url
-).toString();
+import PdfJsExtract from './pdfjs-extract';
 
 export function PdfViewer() {
   const {
@@ -31,16 +24,12 @@ export function PdfViewer() {
   } = useViewerContext();
 
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+  const [arrayBuffer, setArrayBuffer] = useState<ArrayBuffer | null>(null);
 
-  const handleLoadSuccess = ({ numPages }: { numPages: number }) => {
-    updatePageCount(numPages);
-  };
-
-  const pdfViewerOptions = useMemo(
-    () => ({
-      cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`,
-      standardFontDataUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/standard_fonts/`,
-    }),
+  const handleLoadSuccess = useCallback(
+    ({ numPages }: { numPages: number }) => {
+      updatePageCount(numPages);
+    },
     []
   );
 
@@ -51,6 +40,14 @@ export function PdfViewer() {
     loadedStatus: DOCUMENT_UPLOAD_STATUS.LOADED_IN_EDITOR,
     updateCanvasScale,
   });
+
+  useEffect(() => {
+    if (file instanceof File) {
+      file.arrayBuffer().then(setArrayBuffer);
+    } else if (typeof file === 'string') {
+      setArrayBuffer(file);
+    }
+  }, [file]);
 
   if (documentUploadStatus === DOCUMENT_UPLOAD_STATUS.LOADED_IN_EDITOR)
     return (
@@ -72,22 +69,14 @@ export function PdfViewer() {
           transition={{ duration: 0.3, ease: 'easeOut' }}
           className="pdf-container flex relative flex-1 bg-[transparent]"
         >
-          <motion.div className="relative my-4 w-full bg-[transparent]">
-            <Document
-              file={file}
-              options={pdfViewerOptions}
-              rotate={documentProps.rotate}
-              onLoadSuccess={handleLoadSuccess}
-            >
-              <Page
-                canvasBackground="transparent"
-                scale={canvasScale}
-                pageNumber={currentPage}
-                renderMode="canvas"
-                className={'flex items-center justify-center'}
-                rotate={documentProps.rotate}
-              />
-            </Document>
+          <motion.div className="relative my-4 flex flex-1 w-full bg-[transparent]">
+            <PdfJsExtract
+              file={arrayBuffer as ArrayBuffer}
+              pageNumber={currentPage}
+              scale={canvasScale}
+              rotation={documentProps.rotate}
+              onPageLoad={handleLoadSuccess}
+            />
           </motion.div>
         </motion.div>
       </div>
