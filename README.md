@@ -28,8 +28,9 @@
 
 ## 🛠️ Tech Stack
 
-- React + TypeScript
+- Nextjs + TypeScript
 - Tailwind CSS
+- Shadcn
 - PDF.js
 - Vite
 
