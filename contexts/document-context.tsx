@@ -120,11 +120,7 @@ export function DocumentProvider({ children }: { children: React.ReactNode }) {
         setDocumentUploadStatus,
         setCurrentPage,
         setPageCount,
-        setDocumentProps: (value) => {
-          setDocumentProps(
-            (value as (prevState: documentProps) => documentProps)(docProps)
-          );
-        },
+        setDocumentProps,
         canUndo,
         canRedo,
         undo,

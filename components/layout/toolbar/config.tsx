@@ -78,7 +78,8 @@ export const annotateButtons = (
 
 export const highlightButtons = (
   activeToolbarBtn: ToolbarBtn | null,
-  updateActiveToolbarBtn: UpdateActiveToolbarBtn
+  onFutureFeatClick: OnFutureFeatClick
+  // updateActiveToolbarBtn: UpdateActiveToolbarBtn
 ): ToolbarButtonConfig[] => [
   {
     tooltip: 'Highlight',
@@ -91,13 +92,14 @@ export const highlightButtons = (
     ),
     label: 'Highlight',
     isActive: activeToolbarBtn?.id === TOOLBAR_BTNS.HIGHLIGHT,
-    onClick: () =>
-      updateActiveToolbarBtn({
-        id: TOOLBAR_BTNS.HIGHLIGHT,
-        label: 'Highlight',
-        onClick: () => null,
-        hideCustomCursor: true,
-      }),
+    onClick: onFutureFeatClick,
+    // todo:feat/highlight
+    // updateActiveToolbarBtn({
+    //   id: TOOLBAR_BTNS.HIGHLIGHT,
+    //   label: 'Highlight',
+    //   onClick: () => null,
+    //   hideCustomCursor: true,
+    // }),
     dropdownContent: <HighlightStylePane />,
   },
 ];
@@ -133,7 +135,7 @@ export const toolbarConfig = (
 ): Partial<Record<LEFT_SIDEBAR_ENUMS, ToolbarButtonConfig[]>> => ({
   [LEFT_SIDEBAR_ENUMS.POPULAR]: [
     ...annotateButtons(activeToolbarBtn, onFutureFeatClick),
-    ...highlightButtons(activeToolbarBtn, updateActiveToolbarBtn),
+    ...highlightButtons(activeToolbarBtn, onFutureFeatClick),
     ...underlineButtons(activeToolbarBtn, onFutureFeatClick),
   ],
   [LEFT_SIDEBAR_ENUMS.ANOTATE]: annotateButtons(
@@ -142,7 +144,7 @@ export const toolbarConfig = (
   ),
   [LEFT_SIDEBAR_ENUMS.HIGHLIGHT]: highlightButtons(
     activeToolbarBtn,
-    updateActiveToolbarBtn
+    onFutureFeatClick
   ),
   [LEFT_SIDEBAR_ENUMS.UNDERLINE]: underlineButtons(
     activeToolbarBtn,

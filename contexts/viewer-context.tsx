@@ -9,6 +9,7 @@ import {
   documentProps,
   ViewerContextValue,
   ViewerContextProviderProps,
+  ToolbarBtn,
 } from '@/lib/types/viewer-context';
 import { useDocumentContext } from './document-context';
 import { noop } from '@/lib/utils';
@@ -36,6 +37,8 @@ export const ViewerContext = React.createContext<ViewerContextValue>({
   isFloatingEditorHovered: false,
   isCursorWithinRect: false,
   loadedPdfDoc: null,
+
+  // actions
   setIsCursorWithinRect: noop,
   setIsFloatingEditorHovered: noop,
   undo: noop,
@@ -96,16 +99,30 @@ export function ViewerContextProvider({
     setIsCursorWithinRect,
   } = useUIContext();
 
+  const [state, setState] = React.useState<{
+    activeToolbarBtn: ToolbarBtn | null;
+    canRedo: boolean;
+    canUndo: boolean;
+  }>({
+    activeToolbarBtn: null,
+    canRedo: false,
+    canUndo: false,
+  });
+
   const onFocusModeToggle = () => {
     setIsFocusModeEnabled((prev) => !prev);
     toast.info(`Focus mode turned ${isFocusModeEnabled ? 'on' : 'off'}`);
   };
 
-  const updateActiveToolbarBtn = () => {
+  const updateActiveToolbarBtn = (param: ToolbarBtn | null) => {
     if (documentUploadStatus !== DOCUMENT_UPLOAD_STATUS.LOADED_IN_EDITOR)
       return toast.info('Upload a document to continue!');
     setIsFloatingEditorHovered(false);
-    // No direct setCursorMode here; handled elsewhere if needed
+    // toggle active toolbar button
+    setState((prev) => ({
+      ...prev,
+      activeToolbarBtn: prev.activeToolbarBtn?.id === param?.id ? null : param,
+    }));
   };
 
   const updateCanvasScale = (newScale: number) => {
@@ -180,8 +197,19 @@ export function ViewerContextProvider({
   return (
     <ViewerContext.Provider
       value={{
+        ...state,
         isFocusModeEnabled,
-        activeToolbarBtn: null,
+        activeSidebarBtn,
+        documentUploadStatus,
+        document,
+        canvasScale,
+        cursorMode,
+        currentPage,
+        pageCount,
+        documentProps,
+        isFloatingEditorHovered,
+        isCursorWithinRect,
+        loadedPdfDoc,
         updateActiveToolbarBtn,
         onDocumentDownload,
         onDocumentUpload,
@@ -189,30 +217,17 @@ export function ViewerContextProvider({
         onDocumentPrint,
         onFutureFeatClick,
         updateActiveSidebarBtn,
-        activeSidebarBtn,
-        documentUploadStatus,
-        document,
         onDocumentUploadCancel,
         updateDocumentUploadStatus: setDocumentUploadStatus,
-        canvasScale,
         updateCanvasScale,
-        cursorMode,
         updateCursorMode,
-        currentPage,
         updateCurrentPage,
-        pageCount,
         updatePageCount,
         updateDocumentProps,
-        documentProps,
-        canRedo: true,
-        canUndo: true,
         undo,
         redo,
-        isFloatingEditorHovered,
         setIsFloatingEditorHovered,
-        isCursorWithinRect,
         setIsCursorWithinRect,
-        loadedPdfDoc,
         onLoadedPdfDocUpdate,
       }}
     >

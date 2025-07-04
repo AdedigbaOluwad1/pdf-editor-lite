@@ -7,11 +7,9 @@ import {
   MessageSquareText,
   MousePointer2,
   Redo2,
-  RedoDot,
   Signature,
   StickyNote,
   Undo2,
-  UndoDot,
 } from 'lucide-react';
 import { useViewerContext } from '@/contexts';
 import { Separator } from '../../ui/separator';
@@ -22,6 +20,7 @@ import CommentViewer from '../../core/comment-viewer';
 import ToolbarButton from './button';
 import { toolbarConfig, ToolbarButtonConfig } from './config';
 import ToolbarZoomControls from './zoom-controls';
+import ToolbarRotateControls from './rotate-controls';
 
 export function StandardToolBar() {
   const {
@@ -35,6 +34,7 @@ export function StandardToolBar() {
     updateCursorMode,
     undo,
     redo,
+    updateDocumentProps,
     canRedo,
     canUndo,
   } = useViewerContext();
@@ -81,7 +81,21 @@ export function StandardToolBar() {
           orientation="vertical"
         />
 
-        <Tooltip content="Rotate left" side="bottom" sideOffset={10}>
+        <ToolbarRotateControls
+          onRotateLeft={() =>
+            updateDocumentProps((prev) => ({
+              ...prev,
+              rotate: prev.rotate - 90,
+            }))
+          }
+          onRotateRight={() =>
+            updateDocumentProps((prev) => ({
+              ...prev,
+              rotate: prev.rotate + 90,
+            }))
+          }
+        />
+        {/* <Tooltip content="Rotate left" side="bottom" sideOffset={10}>
           <IconButton
             onClick={onFutureFeatClick}
             className="p-2 hover:bg-[#dae1e8]"
@@ -105,7 +119,7 @@ export function StandardToolBar() {
               color="#325167"
             />
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
 
         <Separator
           className="bg-[#a5b5c1] min-h-[15px] mx-2"
@@ -196,14 +210,14 @@ export function StandardToolBar() {
           }}
           dropdown={{ align: 'end', side: 'bottom' }}
           dropdowncontent={<CommentViewer />}
-          onClick={() =>
-            updateActiveToolbarBtn({
-              id: TOOLBAR_BTNS.COMMENT,
-              onClick: () => null,
-              label: 'Add comment',
-              hideCustomCursor: true,
-            })
-          }
+          onClick={onFutureFeatClick}
+          // todo: feat/add-comments
+          // updateActiveToolbarBtn({
+          //   id: TOOLBAR_BTNS.COMMENT,
+          //   onClick: onFutureFeatClick,
+          //   label: 'Add comment',
+          //   hideCustomCursor: true,
+          // })
           isActive={activeToolbarBtn?.id === TOOLBAR_BTNS.COMMENT}
         >
           <div className="flex items-center gap-2">
