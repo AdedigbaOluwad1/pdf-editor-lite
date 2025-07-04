@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 
 interface UndoRedoState<T> {
   state: T;
-  setState: (value: T) => void;
+  setState: React.Dispatch<React.SetStateAction<T>>;
   canUndo: boolean;
   canRedo: boolean;
   undo: () => void;
@@ -22,7 +22,7 @@ export function useUndoRedo<T>(initialValue: T): UndoRedoState<T> {
       setPointer(updatedHistory.length);
     },
     [history, pointer]
-  );
+  ) as React.Dispatch<React.SetStateAction<T>>;
 
   const canUndo = pointer > 0;
   const canRedo = pointer < history.length - 1;

@@ -24,7 +24,6 @@ export default function CustomCursor({
     };
 
     const mouseEnter = () => {
-      console.log('Hey');
       setIsCursorWithinRect(true);
     };
 

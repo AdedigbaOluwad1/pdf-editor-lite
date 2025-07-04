@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import Avatar from '../common/avatar';
 import { useViewerContext } from '@/contexts';
@@ -12,7 +13,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '../ui/dialog';
-import { IHighlight } from 'react-pdf-highlighter';
 import { toast } from 'sonner';
 
 export interface CommentItemProps {
@@ -105,9 +105,7 @@ export const CommentItem = ({
 
 export default function CommentViewer() {
   const { documentProps, updateDocumentProps } = useViewerContext();
-  const [selectedComment, setSelectedComment] = useState<IHighlight | null>(
-    null
-  );
+  const [selectedComment, setSelectedComment] = useState<any>(null);
 
   const UpdateCommentDialog = ({
     open,

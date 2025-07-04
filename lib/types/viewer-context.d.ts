@@ -24,13 +24,12 @@ export interface ViewerContextValue {
   pageCount: number;
   documentProps: documentProps;
   loadedPdfDoc: import('pdf-lib').PDFDocument | null;
-  redo: () => void;
-  undo: () => void;
   canUndo: boolean;
   canRedo: boolean;
   isFloatingEditorHovered: boolean;
   isCursorWithinRect: boolean;
-
+  redo: () => void;
+  undo: () => void;
   setIsCursorWithinRect: React.Dispatch<React.SetStateAction<boolean>>;
   setIsFloatingEditorHovered: React.Dispatch<React.SetStateAction<boolean>>;
   updateActiveToolbarBtn: (param: ToolbarBtn | null) => void;
@@ -54,7 +53,7 @@ export interface ViewerContextValue {
     payload: (
       currentProps: documentProps,
       initProps: documentProps
-    ) => documentProps | documentProps
+    ) => documentProps
   ) => void;
   onLoadedPdfDocUpdate: (
     param: Uint8Array<ArrayBufferLike> | undefined
