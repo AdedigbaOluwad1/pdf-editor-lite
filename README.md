@@ -31,7 +31,6 @@
 - Nextjs + TypeScript
 - Tailwind CSS
 - Shadcn
-- PDF.js
 - Vite
 
 ---
