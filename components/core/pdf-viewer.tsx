@@ -8,7 +8,10 @@ import { DOCUMENT_UPLOAD_STATUS } from '@/lib/enums';
 import CustomCursor from './custom-cursor';
 import { CommentDialog } from './comment-dialog';
 import { usePdfPanZoom } from '@/hooks/use-pdf-pan-zoom';
-import PdfJsExtract from './pdfjs-extract';
+import dynamic from 'next/dynamic';
+
+// Load only on the client to avoid SSR errors from browser-only APIs like DOMMatrix
+const PdfJsExtract = dynamic(() => import('./pdfjs-extract'), { ssr: false });
 
 export function PdfViewer() {
   const {
@@ -30,7 +33,7 @@ export function PdfViewer() {
     ({ numPages }: { numPages: number }) => {
       updatePageCount(numPages);
     },
-    []
+    [documentUploadStatus]
   );
 
   usePdfPanZoom({
